@@ -16,12 +16,26 @@ function reflect(text) {
         "are": "am"
     };
 
-    // Replace each word if it exists in our swaps dictionary
     const reflectedWords = words.map(word => swaps[word] || word);
     return reflectedWords.join(' ');
 }
 
-// 2. The core message handling function
+// 2. Custom Response Framework
+function getCustomResponse(text) {
+    const lowerText = text.toLowerCase();
+    
+    if (lowerText.includes('hello') || lowerText.includes('hi') || lowerText.includes('greetings')) {
+        return "This is a placeholder for a multi-input response.";
+    }
+
+    if (lowerText === 'what are you') {
+        return "This is a placeholder for a single exact-match response.";
+    }
+
+    return null; // Returns null if no custom rule matches
+}
+
+// 3. The core message handling function
 function sendMessage() {
     const text = userInput.value.trim();
     
@@ -35,21 +49,26 @@ function sendMessage() {
     userInput.value = '';
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-    // 3. Generate the ELIZA response after a short delay
+    // 4. Generate response after a short delay
     setTimeout(function() {
-        const reflectedText = reflect(text);
-        
-        // Clean ELIZA template (only outputting the reflected question)
-        const elizaReply = `Why do you say that ${reflectedText}?`;
+        // FIRST: Check if there is a custom response
+        let botReply = getCustomResponse(text);
 
+        // SECOND: If no custom response matched (it's null), use ELIZA reflection
+        if (botReply === null) {
+            const reflectedText = reflect(text);
+            botReply = `Why do you say that ${reflectedText}?`;
+        }
+
+        // Show the bot's response on screen
         messagesContainer.innerHTML += `
-            <div class="message bot-message">${elizaReply}</div>
+            <div class="message bot-message">${botReply}</div>
         `;
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }, 500);
 }
 
-// 4. Enter key listener
+// 5. Enter key listener
 userInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         sendMessage();
