@@ -1,39 +1,50 @@
 const userInput = document.getElementById('userInput');
-    const messagesContainer = document.getElementById('messages');
+const messagesContainer = document.getElementById('messages');
 
-    function sendMessage() {
-        const text = userInput.value.trim();
+
+function reflect(text) {
+    const words = text.toLowerCase().split(' ');
+    const swaps = {
+        "i": "you",
+        "me": "you",
+        "my": "your",
+        "mine": "yours",
+        "am": "are",
+        "you": "I",
+        "your": "my",
+        "yours": "mine",
+        "are": "am"
+    };
+
+    const reflectedWords = words.map(word => swaps[word] || word);
+    return reflectedWords.join(' ');
+}
+
+function sendMessage() {
+    const text = userInput.value.trim();
+    
+    if (text === '') return;
+
+    messagesContainer.innerHTML += `
+        <div class="message user-message">${text}</div>
+    `;
+
+    userInput.value = '';
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    setTimeout(function() {
+        const reflectedText = reflect(text);
         
-        if (text === '') return;
+        const elizaReply = `I don't understand ${reflectedText}?`;
 
         messagesContainer.innerHTML += `
-            <div class="message user-message">${text}</div>
+            <div class="message bot-message">${elizaReply}</div>
         `;
-
-        userInput.value = '';
-
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-        setTimeout(function() {
-            let janetReply = "I am Janet! How may I be of assistance?";
-            
-            const lowerText = text.toLowerCase();
-            if (lowerText.includes('robot')) {
-                janetReply = "Not a robot!";
-            } else if (lowerText.includes('hello') || lowerText.includes('hi')) {
-                janetReply = "Hi there! I am a programmed guide, not a person.";
-            }
-
-
-            messagesContainer.innerHTML += `
-                <div class="message bot-message">${janetReply}</div>
-            `;
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }, 500);
-    }
+    }, 500);
+}
 
 userInput.addEventListener('keydown', function(event) {
-    console.log("Key pressed:", event.key); // This will print in your browser's console
     if (event.key === 'Enter') {
         sendMessage();
     }
