@@ -1,2 +1,2 @@
 # chatterbox
-believable chatbot of Kaz Brekker without an LLM using Markov chains, keywords. 
+believable chatbot of Good Janet without an LLM using Markov chains, keywords. 
