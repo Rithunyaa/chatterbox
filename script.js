@@ -32,8 +32,9 @@ const userInput = document.getElementById('userInput');
         }, 500);
     }
 
-    userInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            sendMessage();
-        }
-    });
+userInput.addEventListener('keydown', function(event) {
+    console.log("Key pressed:", event.key); // This will print in your browser's console
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+});
