@@ -22,14 +22,22 @@ function reflect(text) {
 function getCustomResponse(text) {
     const lowerText = text.toLowerCase();
     
-    if (lowerText.includes('hello') || lowerText.includes('hi') || lowerText.includes('greetings')) {
-        return "This is a placeholder for a multi-input response.";
+    if (lowerText.includes('hello') || lowerText.includes('hi') || lowerText === ('what the fork')|| lowerText === ('what are you')|| lowerText === ('who are you')|| lowerText.includes('greetings')) {
+        return "Hello! I'm Janet. I'm the informational assistant here in the good place.";
     }
 
-    if (lowerText === 'what are you') {
-        return "This is a placeholder for a single exact-match response.";
+    if (lowerText.includes('bad place')) {
+        return "Oh, I'm sorry. That is the one topic I'm not allowed to tell you about.";
     }
-
+    if (lowerText.includes('fun fact')) {
+        return "Fun fact, all deceased members of the Portland Trailblazers basketball team are in the bad place!";
+    }
+    if (lowerText.includes('thank')) {
+        return "Fun fact, Janet is me!";
+    }
+    if (lowerText === ('will you be okay after i leave')) {
+        return "Yes! This will not affect me in anyway!";
+    }
     return null; 
 }
 
